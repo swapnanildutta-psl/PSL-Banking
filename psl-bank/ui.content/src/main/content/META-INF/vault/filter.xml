@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/psl-bank" mode="merge"/>
+    <filter root="/content/psl-bank" mode="merge"/>
+    <filter root="/content/dam/psl-bank" mode="merge">
+        <exclude pattern="/content/dam/psl-bank(/.*)?"/>
+        <include pattern="/content/dam/psl-bank/jcr:content(/.*)?"/>
+    </filter>
+    <filter root="/content/dam/psl-bank/asset.jpg" mode="merge"/>
+    <filter root="/content/experience-fragments/psl-bank" mode="merge"/>
+</workspaceFilter>

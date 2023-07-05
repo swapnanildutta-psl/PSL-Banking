@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/apps/psl-bank/clientlibs"/>
+    <filter root="/apps/psl-bank/components"/>
+    <filter root="/apps/psl-bank/i18n"/>
+</workspaceFilter>
