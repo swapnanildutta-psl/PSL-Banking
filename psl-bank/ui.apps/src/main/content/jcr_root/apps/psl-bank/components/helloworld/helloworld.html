@@ -1,26 +1,100 @@
-<!--/*
-    Copyright 2015 Adobe Systems Incorporated
-  
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-  
-        http://www.apache.org/licenses/LICENSE-2.0
-  
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/-->
-<div class="cmp-helloworld" data-cmp-is="helloworld">
-    <h2 class="cmp-helloworld__title">Hello World Component</h2>
-    <div class="cmp-helloworld__item" data-sly-test="${properties.text}">
-        <p class="cmp-helloworld__item-label">Text property:</p>
-        <pre class="cmp-helloworld__item-output" data-cmp-hook-helloworld="property">${properties.text}</pre>
-    </div>
-    <div class="cmp-helloworld__item" data-sly-use.model="com.adobe.aem.pslbank.core.models.HelloWorldModel" data-sly-test="${model.message}">
-        <p class="cmp-helloworld__item-label">Model message:</p>
-        <pre class="cmp-helloworld__item-output"data-cmp-hook-helloworld="model">${model.message}</pre>
-    </div>
+<html>
+<head>
+<style>
+.helloworld .container {
+background-color: inherit;
+width: fit-content;
+display: flex;
+align-items: center;
+gap: 5px;
+position:fixed;
+bottom: 25px;
+right: 0px;
+}
+
+.container.active {
+width: auto;
+justify-content: right;
+}
+
+.container:not(.active) {
+justify-content: flex-end;
+}
+
+.close-btn {
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+.helloworld button{
+border: none;
+background-color: inherit;
+}
+
+.helloworld img{
+height: 75px;
+}
+
+.helloworld a {
+font-size: 13px;
+margin-left: 5px;
+text-align: center;
+text-decoration: none
+}
+
+/* Hide all content divs initially */
+.content {
+display: none;
+}
+
+/* Show content divs with active class */
+.content.active {
+display: block;
+}
+.active, .dot:hover
+{
+background-color: inherit;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<button class="collapsible">
+<img src="https://cdn4.iconfinder.com/data/icons/picons-social/57/23-whatsapp-512.png" alt="buttonpng" border="0" />
+</button>
+<div class="content">
+<div class="close-btn">
+<a href="http://wa.me/919051144188?text=Hi!&nsbpthere"> Whatsapp to order at </br> +91 9051144188</a>
+<button class="close-button">X</button>
 </div>
+</div>
+</div>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var close = document.getElementsByClassName("close-button");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+coll[i].addEventListener("click",
+function() {
+var content = this.nextElementSibling;
+content.classList.toggle("active");
+this.parentNode.classList.toggle("active");
+});
+}
+
+for (i = 0; i < close.length; i++) {
+close[i].addEventListener("click",
+function() {
+var content = this.parentNode.parentNode;
+content.classList.toggle("active");
+content.previousElementSibling.classList.toggle("active");
+});
+}
+</script>
+
+</body>
+</html>

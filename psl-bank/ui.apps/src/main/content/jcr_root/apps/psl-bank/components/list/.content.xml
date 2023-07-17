@@ -3,5 +3,5 @@
     jcr:primaryType="cq:Component"
     jcr:title="List"
     sling:resourceSuperType="core/wcm/components/list/v3/list"
-    teaserDelegate="psl-bank/components/teaser"
-    componentGroup="PSL Banking - Content"/>
+    componentGroup="PSL Banking - Content"
+    teaserDelegate="psl-bank/components/teaser"/>
