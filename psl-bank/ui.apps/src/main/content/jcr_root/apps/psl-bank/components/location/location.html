@@ -1,0 +1,194 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <script>
+      function handleOnSubmit(e) {
+        const inputElement = document.querySelector("#location-input");
+        const displayResult = document.querySelector("#display-result");
+        e.preventDefault();
+        inputElement.value.length!==0 && (displayResult.innerHTML = "<p>Loading...</p>") && getLocationSearchData(inputElement.value);
+        console.log(inputElement.value);
+        inputElement.value = "";
+      }
+
+      function getCurrentLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              getData(pos.coords.latitude, pos.coords.longitude);
+            },
+            (err) => console.error(err)
+          );
+        } else {
+          console.log("not supported");
+        }
+      }
+
+      function handleOnClick() {
+        const displayResult = document.querySelector("#display-result");
+        displayResult.innerHTML = "<p>Loading...</p>";
+        getCurrentLocation();
+      }
+
+      function onWindowLoad() {
+        const formElement = document.querySelector("#location-form");
+        const mylocationBtn = document.querySelector("#mylocation");
+        formElement.addEventListener("submit", handleOnSubmit);
+        mylocationBtn.addEventListener("click", handleOnClick);
+      }
+
+      function getData(lat, long) {
+        console.log(lat, long);
+        const query =
+          "/bin/psl-bank/location-query?lon=" + long + "&lat=" + lat;
+        console.log(query);
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            res = this.responseText;
+            console.log(res);
+            document.getElementById("display-result").innerHTML =
+              "<p>" + res + "</p>";
+          }else if(this.readyState == 4 && this.status != 200){
+          	document.getElementById("display-result").innerHTML =
+            "<p id='error'><i>Oops! Error occured. Try again later.</i></p>";
+          }
+        };
+        xhttp.open("GET", query, true);
+        xhttp.send();
+      }
+
+      function getLocationSearchData(keyword) {
+        console.log(keyword);
+        const query = "/bin/psl-bank/locationsearch-query?keyword=" + keyword;
+        console.log(query);
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            res = this.responseText;
+            console.log(res);
+            document.getElementById("display-result").innerHTML =
+              "<p>" + res + "</p>";
+          }else if(this.readyState == 4 && this.status != 200){
+          	document.getElementById("display-result").innerHTML =
+            "<p id='error'><i>Oops! Error occured. Try again later.</i></p>";
+          }
+        };
+        xhttp.open("GET", query, true);
+        xhttp.send();
+      }
+
+      window.onload = onWindowLoad;
+    </script>
+    <style>
+      #form-wrapper {
+        display: flex;
+        background-color: #ececec;
+      }
+
+      #location-input {
+        width: 100%;
+        padding: 8px;
+        margin-right: 0;
+        border: none;
+        background-color: lightgray;
+        border-radius: 15px 0 0 15px;
+      }
+
+      .form-group {
+        margin: 10px 2px;
+      }
+
+      #location-search {
+        /* display: none; */
+        padding: 7px 20px 2px 20px;
+        color: white;
+        background-color: rgb(67, 67, 255);
+        border: none;
+        margin-left: 0;
+        border-radius: 0 15px 15px 0;
+      }
+
+      #location-search:hover {
+        cursor: pointer;
+        background-color: skyblue;
+      }
+
+      #location-search:focus {
+        border: 1px solid black;
+      }
+
+      #location-input:focus {
+        outline: none;
+        background-color: white;
+      }
+
+      #mylocation {
+        background: transparent;
+        border: none;
+        padding: 5px 20px;
+        border-radius: 10px;
+        margin: 2px;
+        font-size: 15px;
+        outline: 1px solid black;
+      }
+
+      #mylocation:hover {
+        cursor: pointer;
+        background-color: rgb(67, 67, 255);
+        color: white;
+        font-size: 16px;
+        outline: none;
+      }
+
+      #mylocation:focus {
+      	background-color: lightgray;
+        outline: none;
+      }
+
+      #display-result p {
+        font-family: "Courier New", Courier, monospace;
+        margin: 10px;
+        padding: 5px 3px;
+        background: #ececec;
+        font-weight: bold;
+      }
+
+      #error i {
+  color: red;
+  font-family: Arial, Helvetica, monospace;
+  font-weight: lighter;
+}
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <form action="" id="location-form">
+        <div id="form-wrapper">
+          <div>
+            <input type="text" id="location-input" title="location-input" class="form-group" />
+          </div>
+          <div>
+            <button id="location-search" type="submit" class="form-group">
+              <span id="search" class="material-symbols-outlined">
+                search
+                <!--<img id="search-icon" src="/content/dam/psl-bank/search_icon.svg" />-->
+              </span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <button id="mylocation" type="button">Use my location</button>
+        </div>
+      </form>
+      <div id="display-result"></div>
+    </div>
+  </body>
+</html>
