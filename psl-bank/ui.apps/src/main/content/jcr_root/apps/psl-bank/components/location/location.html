@@ -13,7 +13,9 @@
         const inputElement = document.querySelector("#location-input");
         const displayResult = document.querySelector("#display-result");
         e.preventDefault();
-        inputElement.value.length!==0 && (displayResult.innerHTML = "<p>Loading...</p>") && getLocationSearchData(inputElement.value);
+        inputElement.value.length !== 0 &&
+          (displayResult.innerHTML = "<p>Loading...</p>") &&
+          getLocationSearchData(inputElement.value);
         console.log(inputElement.value);
         inputElement.value = "";
       }
@@ -56,9 +58,9 @@
             console.log(res);
             document.getElementById("display-result").innerHTML =
               "<p>" + res + "</p>";
-          }else if(this.readyState == 4 && this.status != 200){
-          	document.getElementById("display-result").innerHTML =
-            "<p id='error'><i>Oops! Error occured. Try again later.</i></p>";
+          } else if (this.readyState == 4 && this.status != 200) {
+            document.getElementById("display-result").innerHTML =
+              "<p id='error'><i>Oops! Error occured. Try again later.</i></p>";
           }
         };
         xhttp.open("GET", query, true);
@@ -76,9 +78,12 @@
             console.log(res);
             document.getElementById("display-result").innerHTML =
               "<p>" + res + "</p>";
-          }else if(this.readyState == 4 && this.status != 200){
-          	document.getElementById("display-result").innerHTML =
-            "<p id='error'><i>Oops! Error occured. Try again later.</i></p>";
+          } else if (this.readyState == 4 && this.status == 404) {
+            document.getElementById("display-result").innerHTML =
+              "<p id='error'><i>Wrong details provided. Please check the given address.</i></p>";
+          } else if (this.readyState == 4 && this.status != 200) {
+            document.getElementById("display-result").innerHTML =
+              "<p id='error'><i>Oops! Error occured. Try again later.</i></p>";
           }
         };
         xhttp.open("GET", query, true);
@@ -149,7 +154,7 @@
       }
 
       #mylocation:focus {
-      	background-color: lightgray;
+        background-color: lightgray;
         outline: none;
       }
 
@@ -162,10 +167,10 @@
       }
 
       #error i {
-  		color: red;
-  		font-family: Arial, Helvetica, monospace;
-  		font-weight: lighter;
-	}
+        color: red;
+        font-family: Arial, Helvetica, monospace;
+        font-weight: lighter;
+      }
     </style>
   </head>
   <body>
@@ -173,7 +178,12 @@
       <form action="" id="location-form">
         <div id="form-wrapper">
           <div>
-            <input type="text" id="location-input" title="location-input" class="form-group" />
+            <input
+              type="text"
+              id="location-input"
+              title="location-input"
+              class="form-group"
+            />
           </div>
           <div>
             <button id="location-search" type="submit" class="form-group">

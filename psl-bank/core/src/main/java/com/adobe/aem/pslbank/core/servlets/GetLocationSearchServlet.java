@@ -33,31 +33,37 @@ public class GetLocationSearchServlet extends SlingSafeMethodsServlet {
             String responseString = Network.readJson(URL);
             String coords ="";
             String placeName ="";
+            boolean isCorrect = false;
             String[] csv = responseString.split(",\"");
             String key;
-            for (int i = 0; i < csv.length; i++) {
-                key = new String(csv[i]);
+            for (String s : csv) {
+                key = new String(s);
                 key = key.replace("\"", "");
 
                 if (key.startsWith("center")) {
                     coords = key.split(":")[1];
+                    isCorrect = true;
                     break;
                 }
             }
-            URL= GeoURL_Prefix + coords.substring(1,coords.length()-1)
-                    + GeoURL_Suffix+ GeoAPIKey;
-            responseString = Network.readJson(URL);
-            csv = responseString.split(",\"");
-            for (int i = 0; i < csv.length; i++) {
-                key = new String(csv[i]);
-                key = key.replace("\"", "");
-                if (key.startsWith("place_name")) {
-                    placeName = key.split(":")[1];
-                    break;
-                }
-            }
-            response.getWriter().println(placeName);
 
+            if(isCorrect) {
+                URL = GeoURL_Prefix + coords.substring(1, coords.length() - 1)
+                        + GeoURL_Suffix + GeoAPIKey;
+                responseString = Network.readJson(URL);
+                csv = responseString.split(",\"");
+                for (int i = 0; i < csv.length; i++) {
+                    key = new String(csv[i]);
+                    key = key.replace("\"", "");
+                    if (key.startsWith("place_name")) {
+                        placeName = key.split(":")[1];
+                        break;
+                    }
+                }
+                response.getWriter().println(placeName);
+            }
+            else
+                response.sendError(404, "Incorrect details");
         } catch (Exception e) {
 
             log.error(e.getMessage(), e);

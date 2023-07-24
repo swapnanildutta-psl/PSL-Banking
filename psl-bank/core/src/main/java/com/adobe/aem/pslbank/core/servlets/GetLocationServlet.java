@@ -37,8 +37,8 @@ public class GetLocationServlet extends SlingSafeMethodsServlet {
             String placeName ="";
             String[] csv = responseString.split(",\"");
             String key;
-            for (int i = 0; i < csv.length; i++) {
-                key = new String(csv[i]);
+            for (String s : csv) {
+                key = new String(s);
                 key = key.replace("\"", "");
 
                 if (key.startsWith("place_name")) {
