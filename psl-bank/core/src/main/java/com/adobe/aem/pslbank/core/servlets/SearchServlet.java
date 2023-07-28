@@ -46,13 +46,14 @@ public class SearchServlet extends SlingSafeMethodsServlet {
         try {
             log.info("----------< Executing Query Builder Servlet >----------");
             String searchText = request.getParameter("searchText");
+            String relativePath = request.getParameter("relativePath");
 
             log.info("Search term is: {}", searchText);
             ResourceResolver resourceResolver = request.getResourceResolver();
             session = resourceResolver.adaptTo(Session.class);
 
             Map<String, String> predicate = new HashMap<>();
-            predicate.put("path", "/content/psl-bank");
+            predicate.put("path", relativePath);
             predicate.put("type", NT_PAGE);
             predicate.put("fulltext", searchText);
 
@@ -62,7 +63,7 @@ public class SearchServlet extends SlingSafeMethodsServlet {
 
             SearchResult searchResult = query.getResult();
             if (searchResult.getHits().isEmpty()){
-                response.sendError(SlingHttpServletResponse.SC_NOT_FOUND);
+                response.sendError(SlingHttpServletResponse.SC_NOT_FOUND, "No Result Found");
             }
             else{
                 for (Hit hit : searchResult.getHits()) {
