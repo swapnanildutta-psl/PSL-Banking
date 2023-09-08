@@ -438,14 +438,9 @@
             self._elements.input.setAttribute("aria-expanded", "true");
           } else {
             self._hasMoreResults = false;
-            //self._element.searchResultsNotFoundMessage("Result not found");
             self._elements.results.style.display = "block";
             self._elements.results.innerHTML =
               "<i id='res_not_found'>Result not found</i>";
-            // toggleShow(
-            //   (self._element.searchResultsFoundMessage,
-            //   true
-            // );
             self._elements.input.setAttribute("aria-expanded", "true");
           }
           self._elements.input.setAttribute("aria-expanded", "false");
